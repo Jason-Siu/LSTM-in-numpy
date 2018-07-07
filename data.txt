@@ -1,0 +1,2651 @@
+public class HelloWorld
+{
+	public static void main(String[] args) {
+		System.out.println("Hello World!");
+	}
+}
+
+/* CallingMethodsInSameClass.java
+ *
+ * illustrates how to call static methods a class
+ * from a method in the same class
+ */
+
+public class CallingMethodsInSameClass
+{
+	public static void main(String[] args) {
+		printOne();
+		printOne();
+		printTwo();
+	}
+
+	public static void printOne() {
+		System.out.println("Hello World");
+	}
+
+	public static void printTwo() {
+		printOne();
+		printOne();
+	}
+}
+
+public class Factorial
+{
+	public static void main(String[] args)
+	{	final int NUM_FACTS = 100;
+		for(int i = 0; i < NUM_FACTS; i++)
+			System.out.println( i + "! is " + factorial(i));
+	}
+	
+	public static int factorial(int n)
+	{	int result = 1;
+		for(int i = 2; i <= n; i++)
+			result *= i;
+		return result;
+	}
+}
+
+public class EnhancedFor
+{
+	public static void main(String[] args)
+	{	int[] list ={1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		int sum = sumListEnhanced(list);
+		System.out.println("Sum of elements in list: " + sum);
+
+		System.out.println("Original List");
+		printList(list);
+		System.out.println("Calling addOne");
+		addOne(list);
+		System.out.println("List after call to addOne");
+		printList(list);
+		System.out.println("Calling addOneError");
+		addOneError(list);
+		System.out.println("List after call to addOneError. Note elements of list did not change.");
+		printList(list);
+	}
+
+	// pre: list != null
+	// post: return sum of elements
+	// uses enhanced for loop
+	public static int sumListEnhanced(int[] list)
+	{	int total = 0;
+		for(int val : list)
+		{	total += val;
+		}
+		return total;
+	}
+
+	// pre: list != null
+	// post: return sum of elements
+	// use traditional for loop
+	public static int sumListOld(int[] list)
+	{	int total = 0;
+		for(int i = 0; i < list.length; i++)
+		{	total += list[i];
+			System.out.println( list[i] );
+		}
+		return total;
+	}
+
+	// pre: list != null
+	// post: none.
+	// The code appears to add one to every element in the list, but does not
+	public static void addOneError(int[] list)
+	{	for(int val : list)
+		{	val = val + 1;
+		}
+	}
+
+	// pre: list != null
+	// post: adds one to every element of list
+	public static void addOne(int[] list)
+	{	for(int i = 0; i < list.length; i++)
+		{	list[i]++;
+		}
+	}
+
+	public static void printList(int[] list)
+	{	System.out.println("index, value");
+		for(int i = 0; i < list.length; i++)
+		{	System.out.println(i + ", " + list[i]);
+		}
+	}
+}
+
+public class PrimitiveParameters
+{	
+	public static void main(String[] args)
+	{	go();
+	}
+	
+	public static void go()
+	{	int x = 3;
+		int y = 2;
+		System.out.println("In method go. x: " + x + " y: " + y);
+		falseSwap(x,y);
+		System.out.println("in method go. x: " + x + " y: " + y);
+		moreParameters(x,y);
+		System.out.println("in method go. x: " + x + " y: " + y);
+	}
+	
+	public static void falseSwap(int x, int y)
+	{	System.out.println("in method falseSwap. x: " + x + " y: " + y);
+		int temp = x;
+		x = y;
+		y = temp;
+		System.out.println("in method falseSwap. x: " + x + " y: " + y);
+	}
+	
+	public static void moreParameters(int a, int b)
+	{	System.out.println("in method moreParameters. a: " + a + " b: " + b);
+		a = a * b;
+		b = 12;
+		System.out.println("in method moreParameters. a: " + a + " b: " + b);
+		falseSwap(b,a);
+		System.out.println("in method moreParameters. a: " + a + " b: " + b);	
+	}
+}
+
+public class StringExample
+{	public static void main(String[] args)
+	{	String s1 = "Computer Science";
+		int x = 307;
+		String s2 = s1 + " " + x;
+		String s3 = s2.substring(10,17);
+		String s4 = "is fun";
+		String s5 = s2 + s4;
+		
+		System.out.println("s1: " + s1);
+		System.out.println("s2: " + s2);
+		System.out.println("s3: " + s3);
+		System.out.println("s4: " + s4);
+		System.out.println("s5: " + s5);
+		
+		//showing effect of precedence
+		
+		x = 3;
+		int y = 5;
+		String s6 = x + y + "total";
+		String s7 = "total " + x + y;
+		String s8 = " " + x + y + "total";
+		System.out.println("s6: " + s6);
+		System.out.println("s7: " + s7);
+		System.out.println("s8: " + s8);
+	}
+}
+
+public class BinaryConverter {
+    
+    public static void main(String[] args){
+        for(int i = -5; i < 33; i++){
+            System.out.println(i + ": " + toBinary(i));
+            System.out.println(i);
+            //always another way
+            System.out.println(i + ": " + Integer.toBinaryString(i));
+        }
+    }
+    
+    /*
+     * pre: none
+     * post: returns a String with base10Num in base 2
+     */
+    public static String toBinary(int base10Num){
+        boolean isNeg = base10Num < 0;
+        base10Num = Math.abs(base10Num);        
+        String result = "";
+        
+        while(base10Num > 1){
+            result = (base10Num % 2) + result;
+            base10Num /= 2;
+        }
+        assert base10Num == 0 || base10Num == 1 : "value is not <= 1: " + base10Num;
+        
+        result = base10Num + result;
+        assert all0sAnd1s(result);
+        
+        if( isNeg )
+            result = "-" + result;
+        return result;
+    }
+    
+    /*
+     * pre: cal != null
+     * post: return true if val consists only of characters 1 and 0, false otherwise
+     */
+    public static boolean all0sAnd1s(String val){
+        assert val != null : "Failed precondition all0sAnd1s. parameter cannot be null";
+        boolean all = true;
+        int i = 0;
+        char c;
+        
+        while(all && i < val.length()){
+            c = val.charAt(i);
+            all = c == '0' || c == '1';
+            i++;
+        }
+        return all;
+    }
+}
+
+import java.math.BigInteger;
+import java.util.Random;
+
+public class PrimeEx {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		printTest(10, 4);
+		printTest(2, 2);
+		printTest(54161329, 4);
+		printTest(1882341361, 2);
+		printTest(36, 9);
+
+		System.out.println(isPrime(54161329) + " expect false");
+		System.out.println(isPrime(1882341361) + " expect true");
+		System.out.println(isPrime(2) + " expect true");
+		int numPrimes = 0;
+		Stopwatch s = new Stopwatch();
+		s.start();
+		for(int i = 2; i < 10000000; i++) {
+			if(isPrime(i)) {
+				numPrimes++;
+			}
+		}
+		s.stop();
+		System.out.println(numPrimes + " " + s);
+		s.start();
+		boolean[] primes = getPrimes(10000000);
+		int np = 0;
+		for(boolean b : primes)
+			if(b)
+				np++;
+		s.stop();
+		System.out.println(np + " " + s);
+
+		System.out.println(new BigInteger(1024, 10, new Random()));
+	}
+
+	public static boolean[] getPrimes(int max) {
+		boolean[] result = new boolean[max + 1];
+		for(int i = 2; i < result.length; i++)
+			result[i] = true;
+		final double LIMIT = Math.sqrt(max);
+		for(int i = 2; i <= LIMIT; i++) {
+			if(result[i]) {
+				// cross out all multiples;
+				int index = 2 * i;
+				while(index < result.length){
+					result[index] = false;
+					 index += i;
+				}
+			}
+		}
+		return result;
+	}
+
+
+	public static void printTest(int num, int expectedFactors) {
+		Stopwatch st = new Stopwatch();
+		st.start();
+		int actualFactors = numFactors(num);
+		st.stop();
+		System.out.println("Testing " + num + " expect " + expectedFactors + ", " +
+				"actual " + actualFactors);
+		if(actualFactors == expectedFactors)
+			System.out.println("PASSED");
+		else
+			System.out.println("FAILED");
+		System.out.println(st.time());
+	}
+
+	// pre: num >= 2
+	public static boolean isPrime(int num) {
+		assert num >= 2 : "failed precondition. num must be >= 2. num: " + num;
+		final double LIMIT = Math.sqrt(num);
+		boolean isPrime = (num == 2) ? true : num % 2 != 0;
+		int div = 3;
+		while(div <= LIMIT && isPrime) {
+			isPrime = num % div != 0;
+			div += 2;
+		}
+		return isPrime;
+	}
+
+	// pre: num >= 2
+	public static int numFactors(int num) {
+		assert num >= 2 : "failed precondition. num must be >= 2. num: " + num;
+		int result = 0;
+		final double SQRT = Math.sqrt(num);
+		for(int i = 1; i < SQRT; i++) {
+			if(num % i == 0) {
+				result += 2;
+			}
+		}
+		if(num % SQRT == 0)
+			result++;
+		return result;
+	}
+}
+
+public class Stopwatch
+{
+    private long startTime;
+    private long stopTime;
+
+    public static final double NANOS_PER_SEC = 1000000000.0;
+
+	/**
+	 start the stop watch.
+	*/
+	public void start(){
+		startTime = System.nanoTime();
+	}
+
+	/**
+	 stop the stop watch.
+	*/
+	public void stop()
+	{	stopTime = System.nanoTime();	}
+
+	/**
+	elapsed time in seconds.
+	@return the time recorded on the stopwatch in seconds
+	*/
+	public double time()
+	{	return (stopTime - startTime) / NANOS_PER_SEC;	}
+
+	public String toString(){
+	    return "elapsed time: " + time() + " seconds.";
+	}
+
+	/**
+	elapsed time in nanoseconds.
+	@return the time recorded on the stopwatch in nanoseconds
+	*/
+	public long timeInNanoseconds()
+	{	return (stopTime - startTime);	}
+}
+
+import java.awt.Rectangle;
+
+public class ObjectVarsAsParameters
+{	public static void main(String[] args)
+	{	go();
+	}
+	
+	public static void go()
+	{	Rectangle r1 = new Rectangle(0,0,5,5);
+		System.out.println("In method go. r1 " + r1 + "\n");
+		// could have been 
+		//System.out.prinltn("r1" + r1.toString());
+		r1.setSize(10, 15);
+		System.out.println("In method go. r1 " + r1 + "\n");
+		alterPointee(r1);
+		System.out.println("In method go. r1 " + r1 + "\n");
+		
+		alterPointer(r1);
+		System.out.println("In method go. r1 " + r1 + "\n");
+	}
+	
+	public static void alterPointee(Rectangle r)
+	{	System.out.println("In method alterPointee. r " + r + "\n");
+		r.setSize(20, 30);
+		System.out.println("In method alterPointee. r " + r + "\n");
+	}
+	
+	public static void alterPointer(Rectangle r)
+	{	System.out.println("In method alterPointer. r " + r + "\n");
+		r = new Rectangle(5, 10, 30, 35);
+		System.out.println("In method alterPointer. r " + r + "\n");
+	}
+}
+
+//Mike Scott
+//examples of array manipulations
+
+public class ArrayExamples
+{	public static void main(String[] args)
+	{	int[] list = {1, 2, 3, 4, 1, 2, 3};
+		findAndPrintPairs(list, 5);
+		bubblesort(list);
+		showList(list);
+
+		list = new int[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+		bubblesort(list);
+		showList(list);
+
+		list = new int[]{11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2};
+		bubblesort(list);
+		showList(list);
+
+		list = new int[]{1};
+		bubblesort(list);
+		showList(list);
+	}
+
+
+	// pre: list != null, list.length > 0
+	// post: return index of minimum element of array
+	public static int findMin(int[] list)
+	{	assert list != null && list.length > 0 : "failed precondition";
+
+		int indexOfMin = 0;
+		for(int i = 1; i < list.length; i++)
+		{	if(list[i] < list[indexOfMin])
+			{	indexOfMin = i;
+			}
+		}
+
+		return indexOfMin;
+	}
+
+
+	/*
+	 *pre: list != null, newSize >= 0
+	 *post: nothing. the method does not succeed it resizing the
+	 * argument
+	 */
+	public static void badResize(int[] list, int newSize)
+	{	assert list != null && newSize >= 0 : "failed precondition";
+
+		int[] temp = new int[newSize];
+		int limit = Math.min(list.length, newSize);
+
+		for(int i = 0; i < limit; i++)
+		{	temp[i] = list[i];
+		}
+
+		// uh oh!! Changing pointer, not pointee. This breaks the
+		// relationship between the parameter and argument
+		list = temp;
+	}
+
+
+	/*
+	 *pre: list != null, newSize >= 0
+	 *post: returns an array of size newSize. Elements from 0 to newSize - 1
+	 *	will be copied into the new array
+	 */
+	public static int[] goodResize(int[] list, int newSize)
+	{	assert list != null && newSize >= 0 : "failed precondition";
+
+		int[] result = new int[newSize];
+		int limit = Math.min(list.length, newSize);
+
+		for(int i = 0; i < limit; i++)
+		{	result[i] = list[i];
+		}
+
+		return result;
+	}
+
+
+	/*
+	 *pre: list != null
+	 *post: prints out the indices and values of all pairs of numbers
+	 *in list such that list[a] + list[b] = target
+	 */
+	public static void findAndPrintPairs(int[] list, int target)
+	{	assert list != null : "failed precondition";
+
+		for(int i = 0; i < list.length; i++)
+		{	for(int j = i + 1; j < list.length; j++)
+			{	if(list[i] + list[j] == target)
+				{	System.out.println("The two elements at indices " + i + " and " + j
+						+ " are " + list[i] + " and " + list[j] + " add up to " + target);
+				}
+			}
+		}
+	}
+
+
+	/*
+	 *pre: list != null;
+	 *post: sort the elements of list so that they are in ascending order
+	 */
+	public static void bubblesort(int[] list)
+	{
+		assert list != null : "failed precondition";
+
+		int temp;
+		boolean changed = true;
+		for(int i = 0; i < list.length && changed; i++)
+		{	changed = false;
+			for(int j = 0; j < list.length - i - 1; j++)
+			{	assert (j > 0) && (j + 1 < list.length) : "loop counter j " + j +
+					"is out of bounds.";
+				if(list[j] > list[j+1])
+				{	changed = true;
+					temp = list[j + 1];
+					list[j + 1] = list[j];
+					list[j] = temp;
+				}
+			}
+		}
+
+		assert isAscending( list );
+	}
+
+
+	public static void showList(int[] list)
+	{	for(int i = 0; i < list.length; i++)
+			System.out.print( list[i] + " " );
+		System.out.println();
+	}
+
+	/* 	pre: list != null
+		post: return true if list is sorted in ascedning order, false otherwise
+	*/
+	public static boolean isAscending( int[] list )
+	{	boolean ascending = true;
+		int index = 1;
+		while( ascending && index < list.length )
+		{	assert index >= 0 && index < list.length;
+
+			ascending = (list[index - 1] <= list[index]);
+			index++;
+		}
+
+		return ascending;
+	}
+}
+
+import java.awt.Color;
+
+
+public class FilterExample
+{
+	/*
+	 *pre: image != null, image.length > 1, image[0].length > 1
+	 *	image is a rectangular matrix, neighberhoodSize > 0
+	 *post: return a smoothed version of image
+	 */
+	public Color[][] smooth(Color[][] image, int neighberhoodSize)
+	{	//check precondition
+		assert image != null && image.length > 1 && image[0].length > 1
+				&& ( neighberhoodSize > 0 ) && rectangularMatrix( image )
+				: "Violation of precondition: smooth";
+
+		Color[][] result = new Color[image.length][image[0].length];
+
+		for(int row = 0; row < image.length; row++)
+		{	for(int col = 0; col < image[0].length; col++)
+			{	result[row][col] = aveOfNeighbors(image, row, col, neighberhoodSize);
+			}
+		}
+
+		return result;
+	}
+
+
+	// helper method that determines the average color of a neighberhood
+	// around a particular cell.
+	private Color aveOfNeighbors(Color[][] image, int row, int col, int neighberhoodSize)
+	{	int numNeighbors = 0;
+		int red = 0;
+		int green = 0;
+		int blue = 0;
+
+		for(int r = row - neighberhoodSize; r <= row + neighberhoodSize; r++)
+		{	for(int c = col - neighberhoodSize; c <= col + neighberhoodSize; c++)
+			{	if( inBounds( image, r, c ) )
+				{	numNeighbors++;
+					red += image[r][c].getRed();
+					green += image[r][c].getGreen();
+					blue += image[r][c].getBlue();
+				}
+			}
+		}
+
+		assert numNeighbors > 0;
+		return new Color( red / numNeighbors, green / numNeighbors, blue / numNeighbors );
+	}
+
+	//helper method to determine if given coordinates are in bounds
+	private boolean inBounds(Color[][] image, int row, int col)
+	{	return (row >= 0) && (row <= image.length) && (col >= 0)
+				&& (col < image[0].length);
+	}
+
+	//private method to ensure mat is rectangular
+	private boolean rectangularMatrix( Color[][] mat )
+	{	boolean isRectangular = true;
+		int row = 1;
+		final int COLUMNS = mat[0].length;
+
+		while( isRectangular && row < mat.length )
+		{	isRectangular = ( mat[row].length == COLUMNS );
+			row++;
+		}
+
+		return isRectangular;
+	}
+}
+
+import java.util.Scanner;
+
+public class Life {
+    public static void show(boolean[][] grid){
+        String s = "";
+        for(boolean[] row : grid){
+            for(boolean val : row)
+                if(val)
+                    s += "*";
+                else
+                    s += ".";
+            s += "\n";
+        }
+        System.out.println(s);
+    }
+    
+    public static boolean[][] gen(){
+        boolean[][] grid = new boolean[10][10];
+        for(int r = 0; r < 10; r++)
+            for(int c = 0; c < 10; c++)
+                if( Math.random() > 0.7 )
+                    grid[r][c] = true;
+        return grid;
+    }
+    
+    public static void main(String[] args){
+        boolean[][] world = gen();
+        show(world);
+        System.out.println();
+        world = nextGen(world);
+        show(world);
+        Scanner s = new Scanner(System.in);
+        while(s.nextLine().length() == 0){
+            System.out.println();
+            world = nextGen(world);
+            show(world);
+            
+        }
+    }
+    
+    public static boolean[][] nextGen(boolean[][] world){
+        boolean[][] newWorld 
+            = new boolean[world.length][world[0].length];
+        int num;
+        for(int r = 0; r < world.length; r++){
+            for(int c = 0; c < world[0].length; c++){
+                num = numNeighbors(world, r, c);
+                if( occupiedNext(num, world[r][c]) )
+                    newWorld[r][c] = true;
+            }
+        }
+        return newWorld;
+    }
+    
+    public static boolean occupiedNext(int numNeighbors, boolean occupied){
+        if( occupied && (numNeighbors == 2 || numNeighbors == 3))
+            return true;
+        else if (!occupied && numNeighbors == 3)
+            return true;
+        else
+            return false;
+    }
+
+    private static int numNeighbors(boolean[][] world, int row, int col) {
+        int num = world[row][col] ? -1 : 0;
+        for(int r = row - 1; r <= row + 1; r++)
+            for(int c = col - 1; c <= col + 1; c++)
+                if( inbounds(world, r, c) && world[r][c] )
+                    num++;
+
+        return num;
+    }
+
+    private static boolean inbounds(boolean[][] world, int r, int c) {
+        return r >= 0 && r < world.length && c >= 0 &&
+        c < world[0].length;
+    }
+}
+
+import java.util.Scanner;
+
+public class ScannerAndKeyboard
+{
+
+	public static void main(String[] args)
+	{	Scanner s = new Scanner(System.in);
+		System.out.print( "Enter your name: "  );
+		String name = s.nextLine();
+		System.out.println( "Hello " + name + "!" );
+	}
+}
+
+import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+
+public class ReadAndPrintScores
+{
+    public static void main(String[] args)
+    {	
+    	try
+		{   
+			Scanner s = new Scanner( new File("scores.dat") );
+		    while( s.hasNextInt() )
+		    {
+		    	System.out.println( s.nextInt() );
+		    }
+		}
+		catch(IOException e)
+		{	
+			System.out.println( e );  
+	    }
+	}
+}
+
+import java.io.PrintStream;
+import java.io.IOException;
+import java.io.File;
+
+import java.util.Random;
+
+public class WriteToFile
+{	public static void main(String[] args)
+	{	try
+		{	PrintStream writer = new PrintStream( new File("randInts.txt"));
+			Random r = new Random();
+			final int LIMIT = 100;
+
+			for(int i = 0; i < LIMIT; i++)
+			{	writer.println( r.nextInt() );
+			}
+			writer.close();
+		}
+		catch(IOException e)
+		{	System.out.println("An error occured while trying to write to the file");
+		}
+	}
+}
+
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Scanner;
+
+
+public class URLExpSimple {
+
+    
+    public static void main(String[] args) {
+        try {
+            URL mySite = new URL("http://www.cs.utexas.edu/~scottm");
+            URLConnection yc = mySite.openConnection();
+            Scanner in = new Scanner(new InputStreamReader(yc.getInputStream()));
+            int count = 0;
+            while (in.hasNext()) {
+                System.out.println(in.next());
+                count++;
+            }
+            System.out.println("Number of tokens: " + count);
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+
+public class FreqTableExampleOriginal {
+
+    public static final int NUM_ASCII_CHAR = 128;
+
+    // program to create a frequency table.
+    // Example of simple try catch blocks to deal with checked exceptions
+    public static void main(String[] args)
+        {
+
+        int[] freqs = createFreqTableURL("http://www.utexas.edu/");
+
+        if( freqs.length == 0)
+            System.out.println("No frequency table created due to problems when reading from file");
+        else{
+            for(int i = 0; i < NUM_ASCII_CHAR; i++){
+                System.out.println("charcater code: " + i + " ,character: " + (char)i + " ,frequency: " + freqs[i]);
+            }
+            System.out.println("Total characters in file: " + sum(freqs));
+        }
+
+
+        freqs = new int[]{};
+        try{
+            freqs = createTable("ciaFactBook2008.txt");
+        }
+        catch(FileNotFoundException e){
+            System.out.println("File not found. Unable to create freq table" + e);
+        }
+        catch(IOException e){
+            System.out.println("Problem while reading from file. Unable to create freq table" + e);
+        }
+        if( freqs.length == 0)
+            System.out.println("No frequency table created due to problems when reading from file");
+        else{
+            for(int i = 0; i < freqs.length; i++){
+                System.out.println("charcater code: " + i + " ,character: " + (char)i + " ,frequency: " + freqs[i]);
+            }
+            System.out.println("Total characters in file: " + sum(freqs));
+        }
+
+    }
+
+
+    // return sum of ints in list
+    // list may not be null
+    private static int sum(int[] list) {
+        assert list != null : "Failed precondition, sum: parameter list" +
+            " may not be null.";
+        int total = 0;
+        for(int x : list){
+            total += x;
+        }
+        return total;
+    }
+
+
+    // pre: url != null
+    // Connect to the URL specified by the String url.
+    // Map characters to index in array.
+    // All non ASCII character dumped into one element of array
+    // If IOException occurs message printed and array of
+    // length 0 returned.
+    public static int[] createFreqTableURL (String url){
+        if(url == null)
+            throw new IllegalArgumentException("Violation of precondition. parameter url must not be null.");
+
+        int[] freqs = new int[NUM_ASCII_CHAR];
+        try {
+        URL inputURL = new URL(url);
+        InputStreamReader in
+            = new InputStreamReader(inputURL.openStream());
+
+        while(in.ready()){
+            int c = in.read();
+            if(0 <= c && c < freqs.length)
+                freqs[c]++;
+            else
+                System.out.println("Non ASCII char: " + c + " " + (char) c);
+        }
+        in.close();
+        }
+        catch(MalformedURLException e){
+            System.out.println("Bad URL.");
+            freqs = new int[0];
+        }
+        catch(IOException e){
+            System.out.println("Unable to read from resource." + e);
+            freqs = new int[0];
+        }
+        return freqs;
+    }
+
+
+
+    // Connect to the file specified by the String fileName.
+    // Assumes it is in same directory as compiled code.
+    // Map characters to index in array.
+    public static int[] createTable(String fileName) throws FileNotFoundException, IOException{
+        int[] freqs = new int[NUM_ASCII_CHAR];
+        File f = new File(fileName);
+        FileReader r = new FileReader(f);
+        while( r.ready() ){
+            int ch = r.read();
+//            if( 0 <= ch && ch <= NUM_ASCII_CHAR)
+//                freqs[ch]++;
+//            else
+//                freqs[INDEX_NON_ASCII]++;
+            if(0 <= ch && ch < freqs.length)
+                freqs[ch]++;
+            else
+                System.out.println((char) ch);
+                
+        }
+        r.close();
+        return freqs;
+    }
+}
+
+/**
+ * A class to provide a simple list of integers.
+ * List resizes automatically. Used to illustrate 
+ * various design and implementation details of 
+ * a class in Java.
+ * 
+ * Version 1 only contains the instance variables and
+ * the constructors
+ * @author scottm
+ *
+ */
+public class IntListVer1 {
+    // class constant for default size
+    private static final int DEFAULT_CAP = 10;
+    
+    //instance variables
+    private int[] iValues;
+    private int iSize;
+    
+    /**
+     * Default constructor. Creates an empty list.
+     */
+    public IntListVer1(){
+        //redirect to single int constructor
+        this(DEFAULT_CAP);
+        //other statments could go here.
+    }
+
+    /**
+     * Constructor to allow user of class to specify 
+     * initial capacity in case they intend to add a lot
+     * of elements to new list. Creates an empty list.
+     * @param initialCap > 0
+     */    
+    public IntListVer1(int initialCap) {
+        assert initialCap > 0 : "Violation of precondition. IntListVer1(int initialCap):"
+            + "initialCap must be greater than 0. Value of initialCap: " + initialCap;
+        iValues = new int[initialCap];
+        iSize = 0;
+    }
+}
+
+public class IntListTesterVer1 {
+    public static void main(String[] args){
+        IntListVer1 list1 = new IntListVer1();
+        IntListVer1 list2 = new IntListVer1(100);
+        
+        //equal when empty?
+        System.out.println("list1.equals(list2): " + list1.equals(list2));
+        System.out.println("list1: " + list1);
+        System.out.println("list2: " + list2);
+    }
+}
+
+/**
+ * A class to provide a simple list of integers.
+ * List resizes automatically. Used to illustrate 
+ * various design and implementation details of 
+ * a class in Java.
+ * 
+ * Version 1 only contains the instance variables and
+ * the constructors
+ * @author scottm
+ *
+ */
+public class IntListVer2{
+    // class constant for default size
+    private static final int DEFAULT_CAP = 10;
+    
+    //instance variables
+    // iValues store the elements of the list and 
+    // may have extra capacity
+    private int[] iValues;
+    private int iSize;
+    
+    /**
+     * Default add method. Add x to the end of this IntList.
+     * Size of the list goes up by 1.
+     * @param x The value to add to the end of this list.
+     */
+    public void add(int x){
+        // is there extra capacity available?
+        // if not, resize
+        if(iSize == iValues.length)
+            resize();
+        assert 0 <= iSize && iSize < iValues.length;
+        iValues[iSize] = x;
+        iSize++;
+    }
+    
+    // resize internal storage container by a factor of 2
+    private void resize() {
+        int[] temp = new int[iValues.length * 2];
+        System.arraycopy(iValues, 0, temp, 0, iValues.length);
+        iValues = temp;
+    }
+    
+    /**
+     * Return a String version of this list. Size and 
+     * elements included.
+     */
+    public String toString(){
+        // we could make this more effecient by using a StringBuffer.
+        // See alternative version
+        String result = "size: " + iSize + ", elements: [";
+        for(int i = 0; i < iSize - 1; i++)
+            result += iValues[i] + ", ";
+        if(iSize > 0 )
+            result += iValues[iSize - 1];
+        result += "]";
+        return result;
+    }
+    
+    // Would not really have this and toString available
+    // both included just for testing
+    public String toStringUsingStringBuffer(){
+        StringBuffer result = new StringBuffer();
+        result.append( "size: " );
+        result.append( iSize );
+        result.append(", elements: [");
+        for(int i = 0; i < iSize - 1; i++){
+            result.append(iValues[i]);
+            result.append(", ");
+        }
+        if( iSize > 0 )
+            result.append(iValues[iSize - 1]);
+        result.append("]");
+        return result.toString();
+    }
+
+    /**
+     * Default constructor. Creates an empty list.
+     */
+    public IntListVer2(){
+        //redirect to single int constructor
+        this(DEFAULT_CAP);
+        //other statments could go here.
+    }
+
+    /**
+     * Constructor to allow user of class to specify 
+     * initial capacity in case they intend to add a lot
+     * of elements to new list. Creates an empty list.
+     * @param initialCap > 0
+     */    
+    public IntListVer2(int initialCap) {
+        assert initialCap > 0 : "Violation of precondition. IntListVer1(int initialCap):"
+            + "initialCap must be greater than 0. Value of initialCap: " + initialCap;
+        iValues = new int[initialCap];
+        iSize = 0;
+    }
+    
+   /**
+    * Return true if this IntList is equal to other.<br>
+    * pre: none
+    * @param other The object to comapre to this
+    * @return true if other is a non null, IntList object
+    * that is the same size as this IntList and has the
+    * same elements in the same order, false otherwise.
+    */
+    public boolean equals(Object other){
+        boolean result;
+        if(other == null)
+            // we know this is not null so can't be equal
+            result = false;
+        else if(this == other)
+            // quick check if this and other refer to same IntList object
+            result = true;
+        else if( this.getClass() != other.getClass() )
+            // other is not an IntList they can't be equal
+            result = false;
+        else{
+            // other ris not null and refers to an IntList
+            IntListVer2 otherIntList = (IntListVer2)other;
+            result = this.iSize == otherIntList.iSize;
+            int i = 0;
+            while(i < iSize && result){
+                result = this.iValues[i] == otherIntList.iValues[i];
+                i++;
+            }
+        }
+        return result;     
+    }
+
+}
+
+public class IntListTesterVer2 {
+    public static void main(String[] args){
+        IntListVer2 list1 = new IntListVer2();
+        IntListVer2 list2 = new IntListVer2(100);
+        
+        //equal when empty?
+        System.out.println("list1.equals(list2): " + list1.equals(list2));
+        System.out.println("list1: " + list1);
+        System.out.println("list2: " + list2);
+        
+        //add elements
+        for(int i = 0; i < 100; i += 5){
+            list1.add(i);
+            list2.add(i);
+        }
+        
+        System.out.println("list1.equals(list2): " + list1.equals(list2));
+        System.out.println("list1: " + list1);
+        System.out.println("list2: " + list2);
+        
+        list2.add(200);
+        System.out.println("Added 200 to list2.");
+        System.out.println("list1.equals(list2): " + list1.equals(list2));
+        System.out.println("list1: " + list1);
+        System.out.println("list2: " + list2);
+        
+        System.out.println("Testing efficieny of StringBuffer versus using String.");
+        System.out.println("Increasing list1 size to 10000.");
+        Stopwatch s = new Stopwatch();
+        list1 = new IntListVer2();
+        for(int i = 0; i < 10000; i++)
+            list1.add(i);
+        s.start();
+        list1.toString();
+        s.stop();
+        System.out.println("Time to build String using String class: " + s.toString() );
+        s.start();
+        list1.toStringUsingStringBuffer();
+        s.stop();
+        System.out.println("Time to build String using StringBuffer class: " + s.toString() );
+
+    }
+}
+/**
+ * A class to provide a simple list of integers.
+ * List resizes automatically. Used to illustrate 
+ * various design and implementation details of 
+ * a class in Java.
+ * 
+ * Version 3 added the insert and remove methods. Changed the
+ * add method to rely on insert.
+ * @author scottm
+ *
+ */
+public class IntListVer3{
+    // class constant for default size
+    private static final int DEFAULT_CAP = 10;
+    
+    //instance variables
+    // iValues store the elements of the list and 
+    // may have extra capacity
+    private int[] iValues;
+    private int iSize;
+    
+    /**
+     * Default constructor. Creates an empty list.
+     */
+    public IntListVer3(){
+        //redirect to single int constructor
+        this(DEFAULT_CAP);
+        //other statments could go here.
+    }
+
+    /**
+     * Constructor to allow user of class to specify 
+     * initial capacity in case they intend to add a lot
+     * of elements to new list. Creates an empty list.
+     * @param initialCap > 0
+     */    
+    public IntListVer3(int initialCap) {
+        assert initialCap > 0 : "Violation of precondition. IntListVer1(int initialCap):"
+            + "initialCap must be greater than 0. Value of initialCap: " + initialCap;
+        iValues = new int[initialCap];
+        iSize = 0;
+    }
+    
+    /**
+     * Default add method. Add x to the end of this IntList.
+     * Size of the list goes up by 1.
+     * @param x The value to add to the end of this list.
+     */
+    public void add(int x){
+        //example of loose coupling
+        insert(iSize, x);
+    }
+    
+    /**
+     * Retrieve an element from the list based on position.
+     * @param pos 0 <= pos < size()
+     * @return The element at the given position.
+     */
+    public int get(int pos){
+        assert 0 <= pos && pos < size() : "Failed precondition get. " +
+        		"pos it out of bounds. Value of pos: " + pos;
+        return iValues[pos];
+    }
+    
+    /**
+     * Insert x at position pos. Elements with a position equal
+     * to pos or more are shifted to the right. (One added to their
+     * position.)
+     * post: get(pos) = x, size() = old size() + 1
+     * @param pos 0 <= pos <= size()
+     * @param x
+     */
+    public void insert(int pos, int x){
+        assert 0 <= pos && pos <= size() : "Failed precondition insert. " +
+        "pos is invalid. Value of pos: " + pos;
+        ensureCapcity();
+        for(int i = iSize; i > pos; i--){
+            iValues[i] = iValues[i - 1];
+        }
+        iValues[pos] = x;
+        iSize++;
+    }
+    
+    /**
+     * Remove an element from the list based on position.
+     * Elements with a position greater than pos
+     * are shifted to the left. (One subtracted from their
+     * position.)
+     * @param pos 0 <= pos < size()
+     * @return The element that is removed.
+     */
+    public int remove(int pos){
+        assert 0 <= pos && pos < size() : "Failed precondition remove. " +
+        "pos it out of bounds. Value of pos: " + pos;
+        int removedValue = iValues[pos];
+        for(int i = pos; i < iSize - 1; i++)
+            iValues[i] = iValues[i + 1];
+        iSize--;
+        return removedValue;
+    }
+    
+    private void ensureCapcity(){
+        // is there extra capacity available?
+        // if not, resize
+        if(iSize == iValues.length)
+            resize();
+    }
+    
+    /**
+     * Returns the size of the list.
+     * @return The size of the list.
+     */
+    public int size(){
+        return iSize;
+    }
+    
+    // resize internal storage container by a factor of 2
+    private void resize() {
+        int[] temp = new int[iValues.length * 2];
+        System.arraycopy(iValues, 0, temp, 0, iValues.length);
+        iValues = temp;
+    }
+    
+    /**
+     * Return a String version of this list. Size and 
+     * elements included.
+     */
+    public String toString(){
+        // we could make this more effecient by using a StringBuffer.
+        // See alternative version
+        String result = "size: " + iSize + ", elements: [";
+        for(int i = 0; i < iSize - 1; i++)
+            result += iValues[i] + ", ";
+        if(iSize > 0 )
+            result += iValues[iSize - 1];
+        result += "]";
+        return result;
+    }
+    
+    // Would not really have this and toString available
+    // both included just for testing
+    public String toStringUsingStringBuffer(){
+        StringBuffer result = new StringBuffer();
+        result.append( "size: " );
+        result.append( iSize );
+        result.append(", elements: [");
+        for(int i = 0; i < iSize - 1; i++){
+            result.append(iValues[i]);
+            result.append(", ");
+        }
+        if( iSize > 0 )
+            result.append(iValues[iSize - 1]);
+        result.append("]");
+        return result.toString();
+    }
+    
+   /**
+    * Return true if this IntList is equal to other.<br>
+    * pre: none
+    * @param other The object to comapre to this
+    * @return true if other is a non null, IntList object
+    * that is the same size as this IntList and has the
+    * same elements in the same order, false otherwise.
+    */
+    public boolean equals(Object other){
+        boolean result;
+        if(other == null)
+            // we know this is not null so can't be equal
+            result = false;
+        else if(this == other)
+            // quick check if this and other refer to same IntList object
+            result = true;
+        else if( this.getClass() != other.getClass() )
+            // other is not an IntList they can't be equal
+            result = false;
+        else{
+            // other is not null and refers to an IntList
+            IntListVer3 otherIntList = (IntListVer3)other;
+            result = this.size() == otherIntList.size();
+            int i = 0;
+            while(i < iSize && result){
+                result = this.iValues[i] == otherIntList.iValues[i];
+                i++;
+            }
+        }
+        return result;     
+    }
+
+}
+
+public class SortedIntList extends IntListVer3{
+    
+    public SortedIntList(int initialCap){
+        //call IntList constructor
+        super(initialCap);
+    }
+    
+    public SortedIntList(){
+        super();
+    }
+    
+    //override add
+    public void add(int value){
+        //search for location to insert value
+        int pos = 0;
+        while( pos < size() && value > get(pos) ){
+            pos++;
+        }
+        super.insert(pos, value);
+    }
+    
+}
+
+/**
+ * A class to provide a simple list.
+ * List resizes automatically. Used to illustrate 
+ * various design and implementation details of 
+ * a class in Java.
+ * 
+ * @author scottm
+ *
+ */
+public class GenericList{
+    // class constant for default size
+    private static final int DEFAULT_CAP = 10;
+    
+    //instance variables
+    // iValues store the elements of the list and 
+    // may have extra capacity
+    private Object[] iValues;
+    private int iSize;
+    
+    /**
+     * Default add method. Add x to the end of this IntList.
+     * Size of the list goes up by 1.
+     * @param x The value to add to the end of this list.
+     */
+    public void add(Object x){
+        insert(iSize, x);
+    }
+    
+    public Object get(int pos){
+        return iValues[pos];
+    }
+    
+    /**
+     * Insert obj at position pos.
+     * post: get(pos) = x, size() = old size() + 1
+     * @param pos 0 <= pos <= size()
+     * @param obj The element to add.
+     */
+    public void insert(int pos, Object obj){
+        ensureCapcity();
+        for(int i = iSize; i > pos; i--){
+            iValues[i] = iValues[i - 1];
+        }
+        iValues[pos] = obj;
+        iSize++;
+    }
+    
+    public Object remove(int pos){
+        Object removedValue = iValues[pos];
+        for(int i = pos; i < iSize - 1; i++)
+            iValues[i] = iValues[i + 1];
+        iValues[iSize - 1] = null;
+        iSize--;
+        return removedValue;
+    }
+    
+    private void ensureCapcity(){
+        // is there extra capacity available?
+        // if not, resize
+        if(iSize == iValues.length)
+            resize();
+    }
+    
+    public int size(){
+        return iSize;
+    }
+    
+    // resize internal storage container by a factor of 2
+    private void resize() {
+        Object[] temp = new Object[iValues.length * 2];
+        System.arraycopy(iValues, 0, temp, 0, iValues.length);
+        iValues = temp;
+    }
+    
+    /**
+     * Return a String version of this list. Size and 
+     * elements included.
+     */
+    public String toString(){
+        // we could make this more effecient by using a StringBuffer.
+        // See alternative version
+        String result = "size: " + iSize + ", elements: [";
+        for(int i = 0; i < iSize - 1; i++)
+            result += iValues[i].toString() + ", ";
+        if(iSize > 0 )
+            result += iValues[iSize - 1];
+        result += "]";
+        return result;
+    }
+    
+    // Would not really have this and toString available
+    // both included just for testing
+    public String toStringUsingStringBuffer(){
+        StringBuffer result = new StringBuffer();
+        result.append( "size: " );
+        result.append( iSize );
+        result.append(", elements: [");
+        for(int i = 0; i < iSize - 1; i++){
+            result.append(iValues[i]);
+            result.append(", ");
+        }
+        if( iSize > 0 )
+            result.append(iValues[iSize - 1]);
+        result.append("]");
+        return result.toString();
+    }
+
+    /**
+     * Default constructor. Creates an empty list.
+     */
+    public GenericList(){
+        //redirect to single int constructor
+        this(DEFAULT_CAP);
+        //other statments could go here.
+    }
+
+    /**
+     * Constructor to allow user of class to specify 
+     * initial capacity in case they intend to add a lot
+     * of elements to new list. Creates an empty list.
+     * @param initialCap > 0
+     */    
+    public GenericList(int initialCap) {
+        assert initialCap > 0 : "Violation of precondition. IntListVer1(int initialCap):"
+            + "initialCap must be greater than 0. Value of initialCap: " + initialCap;
+        iValues = new Object[initialCap];
+        iSize = 0;
+    }
+    
+   /**
+    * Return true if this IntList is equal to other.<br>
+    * pre: none
+    * @param other The object to comapre to this
+    * @return true if other is a non null, IntList object
+    * that is the same size as this IntList and has the
+    * same elements in the same order, false otherwise.
+    */
+    public boolean equals(Object other){
+        boolean result;
+        if(other == null)
+            // we know this is not null so can't be equal
+            result = false;
+        else if(this == other)
+            // quick check if this and other refer to same IntList object
+            result = true;
+        else if( this.getClass() != other.getClass() )
+            // other is not an IntList they can't be equal
+            result = false;
+        else{
+            // other is not null and refers to an IntList
+            GenericList otherList = (GenericList)other;
+            result = this.size() == otherList.size();
+            int i = 0;
+            while(i < iSize && result){
+                result = this.iValues[i].equals( otherList.iValues[i] );
+                i++;
+            }
+        }
+        return result;     
+    }
+
+}
+
+import java.util.Random;
+
+/**
+ * Models a playing die with sides numbered 1 to N.
+ * All sides have uniform probablity of being rolled.
+ *
+ * @author Summer CS 307 class
+ */
+public class Die
+{   public static final int DEFAULT_SIDES = 6;
+
+    private static Random ourRandNumGen = new Random();
+
+    private final int iMyNumSides;
+    private int iMyResult;
+
+
+    /**
+     * Default constructor.<p>
+     * pre: none<br>
+     * post: getNumSides() = DEFAULT_SIDES, getResult() = 1
+     */
+    public Die()
+    {   this(DEFAULT_SIDES);
+    }
+
+
+    /**
+     * Create a Die with numSides sides<p>
+     * pre: numSides > 1<br>
+     * post: getNumSides() = numSides, getResult() = 1<br>
+     * An exception will be generated if the preconditions are not met
+     */
+    public Die(int numSides)
+    {   assert numSides > 1 : "Violation of precondition: numSides = " + numSides + "numSides must be greater than 1";
+
+        iMyNumSides = numSides;
+        iMyResult = 1;
+        assert getResult() == 1 && getNumSides() == numSides;
+    }
+
+
+    /**
+     * Create a Die with numSides and top side and result set to result<p>
+     * pre: numSides > 1, 1 <= result <= numSides<br>
+     * post: getNumSides() = numSides, getResult() = 1<br>
+     * An exception will be generated if the preconditions are not met
+     */
+    public Die(int numSides, int result)
+    {   assert numSides > 1 && 1 <= result && result <= numSides : "Violation of precondition";
+
+        iMyNumSides = numSides;
+        iMyResult = result;
+    }
+
+
+    /**
+     * roll this Die. Every side has an equal chance of being the new result<p>
+     * pre: none<br>
+     * post: 1 <= getResult() <= getNumSides()
+     * @return the result of the Die after the roll
+     */
+    public int roll()
+    {   iMyResult = ourRandNumGen.nextInt(iMyNumSides) + 1;
+
+        assert ( 1 <= getResult() ) && ( getResult() <= getNumSides() );
+
+        return iMyResult;
+    }
+
+
+    /**
+     * return how many sides this Die has<p>
+     * pre: none<br>
+     * post: return how many sides this Die has
+     * @return the number of sides on this Die
+     */
+    public int getNumSides()
+    {   return iMyNumSides; }
+
+
+    /**
+     * get the current result or top number of this Die<p>
+     * pre: none<br>
+     * post: return the number on top of this Die
+     * @return the current result of this Die
+     */
+    public int getResult()
+    {   return iMyResult;   }
+
+
+    /**
+     * returns true if this Die and the parameter otherObj are equal<p>
+     * pre: none<br>
+     * post: return true if the parameter is a Die object with the same number of sides as this Die and currently has the same result.
+     * @return true if the the two Dice are equal, false otherwise
+     */
+    public boolean equals(Object otherObj)
+    {   boolean result = true;
+        if(otherObj == null)
+            result = false;
+        else if(this == otherObj)
+            result = true;
+        else if(this.getClass() != otherObj.getClass())
+            result = false;
+        else
+        {   Die otherDie = (Die)otherObj;
+            result = this.iMyResult == otherDie.iMyResult
+                && this.iMyNumSides == otherDie.iMyNumSides;
+        }
+        return result;
+    }
+
+
+    /**
+     * returns a String containing information about this Die<p>
+     * pre: none<br>
+     * post: return a String with information about the current state of this Die
+     * @return: A String with the number of sides and current result of this Die
+     */
+    public String toString()
+    {   return "Num sides " + getNumSides() + " result " + getResult();
+    }
+}
+
+public class DemoClass
+{
+    private int x;
+
+    public DemoClass()
+    {
+        // assign default value
+        x = 0;
+    }
+
+    public DemoClass(int x)
+    {
+        // use this.x to refer to the instance variable x
+        // use x to refer to a local variable x (more specifically,
+        // method parameter x)
+        this.x = x;
+    }
+
+    public DemoClass(DemoClass otherDemo)
+    {
+        // copy the value from the otherDemo
+        this.x = otherDemo.x;
+    }
+
+    // static method (aka class method)
+    public static void s1() {
+        return;
+    }
+    // instance method
+    public void i1() {
+        return;
+    }
+
+    // static calling static OK
+    // static calling instance is a compile-time error
+    public static void s2() {
+//        i1();     // compile-time error
+        s1();       // DemoClass.s1
+        return;
+    }
+
+    // instance calling static OK
+    // instance calling instance OK
+    public void i2() {
+        s1();       // DemoClass.s1();
+        i1();       // this.i1();
+        return;
+    }
+
+    // call various versions of overload() based on their 
+    // list of parameters (aka function signatures)
+    public void overloadTester() {
+        System.out.println("overloadTester:\n");
+
+        overload((byte)1);
+        overload((short)1);
+        overload(1);
+        overload(1L);
+        overload(1.0f);
+        overload(1.0);
+        overload('1');
+        overload(true);
+    }
+    
+    public void overload(byte b) {
+        System.out.println("byte");
+    }    
+    public void overload(short s) {
+        System.out.println("short");
+    }    
+    public void overload(int i) {
+        System.out.println("int");
+    }
+    public void overload(long l) {
+        System.out.println("long");
+    }
+    public void overload(float f) {
+        System.out.println("float");
+    }
+    public void overload(double d) {
+        System.out.println("double");
+    }    
+    public void overload(char c) {
+        System.out.println("char");
+    }    
+    public void overload(boolean b) {
+        System.out.println("boolean");
+    }    
+
+    public static void main(String[] args) {
+        DemoClass dc = new DemoClass();
+        dc.overloadTester();
+    }
+}
+
+import java.util.Arrays;
+import java.awt.Rectangle;
+
+/**
+ * A sample of a ploymorphic method.
+ * @author scottm
+ *
+ */
+public class CreateASet {
+    
+    public static void main(String[] args){
+        String[] words = {"A", "B", "B", "D", "C", "A"};
+        System.out.println( "original: " + Arrays.toString(words));
+        System.out.println( "as a set: " + Arrays.toString(makeSet(words)));
+        
+        Rectangle[] rectList = {new Rectangle(), new Rectangle(), 
+                    new Rectangle(0, 1, 2, 3), new Rectangle(0, 1, 2, 3)};
+        System.out.println( "original: " + Arrays.toString(rectList));
+        System.out.println( "as a set: " + Arrays.toString(makeSet(rectList)));     
+        
+        
+        Object[] mixed = {"A", "C", "A", "B", new Rectangle(),
+                new Rectangle(), "A", new Rectangle(0, 1, 2, 3), "D"};
+        System.out.println( "original: " + Arrays.toString(mixed));
+        System.out.println( "as a set: " + Arrays.toString(makeSet(mixed))); 
+    }
+    
+    /**
+     * An example of polymorphism in action. The method relies
+     * on Java's inheritance requirement and polymorhphism to call
+     * the correct equals method.
+     * @param data != null, no elements of data are null
+     * @return a Set (no duplicates) of the elements in data.
+     */
+    public static Object[] makeSet(Object[] data){
+        assert data != null : "Failed precondition makeSet. parameter cannot be null";
+        assert noNulls(data) : "Failed precondition makeSet. no elements of parameter can be null";
+        Object[] result = new Object[data.length];
+        int numUnique = 0;
+        boolean found;
+        int indexInResult;
+        for(int i = 0; i < data.length; i++){
+            // maybe should break this out into another method
+            indexInResult = 0;
+            found = false;
+            while(!found && indexInResult < numUnique){
+                found = data[i].equals(result[indexInResult]);
+                indexInResult++;
+            }
+            if( ! found ){
+                result[numUnique] = data[i];
+                numUnique++;
+            }
+        }
+        Object[] result2 = new Object[numUnique];
+        System.arraycopy(result, 0, result2, 0, numUnique);
+        return result2;
+    }
+    
+    // pre: data != null
+    // return true if all elements of data are non null,
+    // false otherwise
+    private static boolean noNulls(Object[] data){
+        assert data != null : "Failed precondition makeSet. parameter cannot be null";
+        boolean good = true;
+        int i = 0;
+        while( good && i < data.length ){
+            good = data[i] != null;
+            i++;
+        }
+        return good;        
+    }
+    
+}
+
+public class RecursionExampleDirectory
+{	
+	public int getSize(Directory dir)
+	{	int total = 0;
+	
+		//check files
+		File[] files = dir.getFiles();
+		for(int i = 0; i < files.length; i++)
+			total += files[i].getSize();
+			
+		//get sub directories and check them
+		Directory[] subs = dir.getSubs();
+		for(int i = 0; i < subs.length; i++)
+			total += getSize(subs[i]);
+			
+		return total;
+	}
+	
+	public static void main(String[] args)
+	{	RecursionExampleDirectory r = new RecursionExampleDirectory();
+		Directory d = new Directory();
+		System.out.println( r.getSize(d) );
+	}
+	
+	//pre: n >= 0
+	public static int fact(int n)
+	{	int result = 0;
+		if(n == 0)
+			result = 1;
+		else
+			result = n * fact(n-1);
+		return result;
+	}
+	
+	//pre: exp >= 0
+	public static int pow(int base, int exp)
+	{	int result = 0;
+		if(exp == 0)
+			result = 1;
+		else
+			result = base * pow(base, exp - 1);
+		return result;
+	}
+	
+	//slow fib
+	//pre: n >= 1
+	public static int fib(int n)
+	{	int result = 0;
+		if(n == 1 || n == 2)
+			result = 1;
+		else
+			result = fib(n-1) + fib(n-2);
+		return result;
+	}
+	
+	public static int minWasted(int[] items, int itemNum, int capLeft)
+	{	int result = 0;
+		if(itemNum >= items.length)
+			result = capLeft;
+		else if( capLeft == 0)
+			result = 0;
+		else
+		{	int minWithout = minWasted(items, itemNum + 1, capLeft);
+			if( capLeft <= items[itemNum])		
+			{	int minWith = minWasted(items, itemNum + 1, capLeft - items[itemNum]);
+				result = Math.min(minWith, minWithout);
+			}
+			else
+				result = minWithout;
+		}
+		return result;	
+	}
+}
+
+class Directory
+{	private Directory[] mySubs;
+	private File[] myFiles;
+	
+	public Directory()
+	{	int numSubs = (int)(Math.random() * 3);
+		mySubs = new Directory[numSubs];
+		int numFiles = (int)(Math.random() * 10);
+		myFiles = new File[numFiles];
+		
+		for(int i = 0; i < myFiles.length; i++)
+			myFiles[i] = new File( (int)(Math.random() * 1000 ) );
+		for(int i = 0; i < mySubs.length; i++)
+			mySubs[i] = new Directory();
+	}
+	
+	public Directory[] getSubs()
+	{	return mySubs;
+	}
+	
+	public File[] getFiles()
+	{	return myFiles;
+	}
+}
+
+class File
+{	private int iMySize;
+
+	public File(int size)
+	{	iMySize = size;
+	}
+	
+	public int getSize()
+	{	return iMySize;
+	}
+}
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+
+public class AirlineProblem {
+
+    public static void main(String[] args){
+        Scanner scannerToReadAirlines = null;
+        try{
+            scannerToReadAirlines = new Scanner(new File("airlines.txt"));
+        }
+        catch(IOException e){
+            System.out.println("Could not connect to file airlines.txt.");
+            System.exit(0);
+        }
+        if(scannerToReadAirlines != null){
+            ArrayList<Airline> airlinesPartnersNetwork = new ArrayList<Airline>();
+            Airline newAirline;
+            String lineFromFile;
+            String[] airlineNames;
+            
+            while( scannerToReadAirlines.hasNext() ){
+                lineFromFile = scannerToReadAirlines.nextLine();
+                airlineNames = lineFromFile.split(",");
+                newAirline = new Airline(airlineNames);
+                airlinesPartnersNetwork.add( newAirline );
+            }
+            System.out.println(airlinesPartnersNetwork);
+            Scanner keyboard = new Scanner(System.in);
+            System.out.print("Enter airline miles are on: ");
+            String start = keyboard.nextLine();
+            System.out.print("Enter goal airline: ");
+            String goal = keyboard.nextLine();
+            ArrayList<String> pathForMiles = new ArrayList<String>();
+            ArrayList<String> airlinesVisited = new ArrayList<String>();
+            if( canRedeem(start, goal, pathForMiles, airlinesVisited, airlinesPartnersNetwork))
+                System.out.println("Path to redeem miles: " + pathForMiles);
+            else
+                System.out.println("Cannot convert miles from " + start + " to " + goal + ".");
+        }
+    }
+    
+    private static boolean canRedeem(String current, String goal,
+            ArrayList<String> pathForMiles, ArrayList<String> airlinesVisited,
+            ArrayList<Airline> network){
+        if(current.equals(goal)){
+            //base case 1, I have found a path!
+            pathForMiles.add(current);
+            return true;
+        }
+        else if(airlinesVisited.contains(current))
+            // base case 2, I have already been here
+            // don't go into a cycle
+            return false;
+        else{
+            // I have not been here and it isn't
+            // the goal so check its partners
+            // now I have been here
+            airlinesVisited.add(current);
+            
+            // add this to the path
+            pathForMiles.add(current);
+            
+            // find this airline in the network
+            int pos = -1;
+            int index = 0;
+            while(pos == -1 && index < network.size()){
+                if(network.get(index).getName().equals(current))
+                    pos = index;
+                index++;
+            }
+            //if not in the network, no partners
+            if( pos == - 1)
+                return false;
+            
+            // loop through partners
+            index = 0;
+            String[] partners = network.get(pos).getPartners();
+            boolean foundPath = false;
+            while( !foundPath && index < partners.length){
+                foundPath = canRedeem(partners[index], goal, pathForMiles, airlinesVisited, network);
+                index++;
+            }
+            if( !foundPath )
+                pathForMiles.remove( pathForMiles.size() - 1);
+            return foundPath;
+        }
+    }
+
+    private static class Airline{
+        private String name;
+        private ArrayList<String> partners;
+        
+        //pre: data != null, data.length > 0
+        public Airline(String[] data){
+            assert data != null && data.length > 0 : "Failed precondition";
+            name = data[0];
+            partners = new ArrayList<String>();
+            for(int i = 1; i < data.length; i++)
+                partners.add( data[i] );
+        }
+        
+        public String[] getPartners(){
+            return partners.toArray(new String[partners.size()]);
+        }
+        
+        public boolean isPartner(String name){
+            return partners.contains(name);
+        }
+        
+        public String getName(){
+            return name;
+        }
+        
+        public String toString(){
+            return name + ", partners: " + partners;
+        }
+    }
+}
+
+public class MineSweeper
+{	private int[][] myTruth;
+	private boolean[][] myShow;
+	
+	public void cellPicked(int row, int col)
+	{	if( inBounds(row, col) && !myShow[row][col] )
+		{	myShow[row][col] = true;
+		
+			if( myTruth[row][col] == 0)
+			{	for(int r = -1; r <= 1; r++)
+					for(int c = -1; c <= 1; c++)
+						cellPicked(row + r, col + c);
+			}	
+		}
+	}
+	
+	public boolean inBounds(int row, int col)
+	{	return 0 <= row && row < myTruth.length && 0 <= col && col < myTruth[0].length;
+	}
+}
+
+import java.util.Collection;
+import java.util.Iterator;
+
+/**
+ * A class to provide a simple list.
+ * List resizes automatically. Used to illustrate 
+ * various design and implementation details of 
+ * a class in Java.
+ * 
+ * @author scottm
+ *
+ */
+public class GenericListVersion2 implements Iterable{
+    // class constant for default size
+    private static final int DEFAULT_CAP = 10;
+    
+    //instance variables
+    // iValues store the elements of the list and 
+    // may have extra capacity
+    private Object[] iValues;
+    private int iSize;
+    
+    private class GenericListIterator implements Iterator{
+        private int position;
+        private boolean removeOK;
+        
+        private GenericListIterator(){
+            position = 0;
+            removeOK = false;
+        }
+        
+        public boolean hasNext(){
+            return position < iSize;
+        }
+        
+        public Object next(){
+            Object result = iValues[position];
+            position++;
+            removeOK = true;
+            return result;
+        }
+        
+        public void remove(){
+            if( !removeOK )
+                throw new IllegalStateException();
+            // which element should be removed??
+            removeOK = false;
+            GenericListVersion2.this.remove(position - 1);
+            position--;
+        }
+    }
+    
+    public Iterator iterator(){
+        return new GenericListIterator();
+    }
+    
+    public void addAll(Collection c){
+       // for each loop
+        for(Object obj : c){
+            this.add(obj);
+        }
+    }
+    
+    /**
+     * Default add method. Add x to the end of this IntList.
+     * Size of the list goes up by 1.
+     * @param x The value to add to the end of this list.
+     */
+    public void add(Object x){
+        insert(iSize, x);
+    }
+    
+    public Object get(int pos){
+        return iValues[pos];
+    }
+    
+    /**
+     * Insert obj at position pos.
+     * post: get(pos) = x, size() = old size() + 1
+     * @param pos 0 <= pos <= size()
+     * @param obj The element to add.
+     */
+    public void insert(int pos, Object obj){
+        ensureCapcity();
+        for(int i = iSize; i > pos; i--){
+            iValues[i] = iValues[i - 1];
+        }
+        iValues[pos] = obj;
+        iSize++;
+    }
+    
+    public Object remove(int pos){
+        Object removedValue = iValues[pos];
+        for(int i = pos; i < iSize - 1; i++)
+            iValues[i] = iValues[i + 1];
+        iValues[iSize - 1] = null;
+        iSize--;
+        return removedValue;
+    }
+    
+    private void ensureCapcity(){
+        // is there extra capacity available?
+        // if not, resize
+        if(iSize == iValues.length)
+            resize();
+    }
+    
+    public int size(){
+        return iSize;
+    }
+    
+    // resize internal storage container by a factor of 2
+    private void resize() {
+        Object[] temp = new Object[iValues.length * 2];
+        System.arraycopy(iValues, 0, temp, 0, iValues.length);
+        iValues = temp;
+    }
+    
+    /**
+     * Return a String version of this list. Size and 
+     * elements included.
+     */
+    public String toString(){
+        // we could make this more effecient by using a StringBuffer.
+        // See alternative version
+        String result = "size: " + iSize + ", elements: [";
+        for(int i = 0; i < iSize - 1; i++)
+            result += iValues[i].toString() + ", ";
+        if(iSize > 0 )
+            result += iValues[iSize - 1];
+        result += "]";
+        return result;
+    }
+    
+    // Would not really have this and toString available
+    // both included just for testing
+    public String toStringUsingStringBuffer(){
+        StringBuffer result = new StringBuffer();
+        result.append( "size: " );
+        result.append( iSize );
+        result.append(", elements: [");
+        for(int i = 0; i < iSize - 1; i++){
+            result.append(iValues[i]);
+            result.append(", ");
+        }
+        if( iSize > 0 )
+            result.append(iValues[iSize - 1]);
+        result.append("]");
+        return result.toString();
+    }
+
+    /**
+     * Default constructor. Creates an empty list.
+     */
+    public GenericListVersion2(){
+        //redirect to single int constructor
+        this(DEFAULT_CAP);
+        //other statments could go here.
+    }
+
+    /**
+     * Constructor to allow user of class to specify 
+     * initial capacity in case they intend to add a lot
+     * of elements to new list. Creates an empty list.
+     * @param initialCap > 0
+     */    
+    public GenericListVersion2(int initialCap) {
+        assert initialCap > 0 : "Violation of precondition. IntListVer1(int initialCap):"
+            + "initialCap must be greater than 0. Value of initialCap: " + initialCap;
+        iValues = new Object[initialCap];
+        iSize = 0;
+    }
+    
+   /**
+    * Return true if this IntList is equal to other.<br>
+    * pre: none
+    * @param other The object to comapre to this
+    * @return true if other is a non null, IntList object
+    * that is the same size as this IntList and has the
+    * same elements in the same order, false otherwise.
+    */
+    public boolean equals(Object other){
+        boolean result;
+        if(other == null)
+            // we know this is not null so can't be equal
+            result = false;
+        else if(this == other)
+            // quick check if this and other refer to same IntList object
+            result = true;
+        else if( this.getClass() != other.getClass() )
+            // other is not an IntList they can't be equal
+            result = false;
+        else{
+            // other is not null and refers to an IntList
+            GenericListVersion2 otherList = (GenericListVersion2)other;
+            result = this.size() == otherList.size();
+            int i = 0;
+            while(i < iSize && result){
+                result = this.iValues[i].equals( otherList.iValues[i] );
+                i++;
+            }
+        }
+        return result;     
+    }
+}
+
+package Fall0811;
+import java.util.Iterator;
+
+public class GenericList<E> implements Iterable<E>{
+ // class constant
+    private static final int DEFAULT_CAP = 10;
+ 
+    // instance variables
+    protected E[] container; // the array is NOT the list
+    private int listSize;
+    
+    public Iterator<E> iterator(){
+        return new GenListIterator();
+    }
+    
+    // inner class
+    private class GenListIterator implements Iterator<E>{
+        private int indexOfNextElement;
+        private boolean okToRemove;
+        
+        private GenListIterator(){
+            indexOfNextElement = 0;
+            okToRemove = false;
+        }
+        
+        public boolean hasNext(){
+            return indexOfNextElement < size();
+        }
+        
+        public E next(){
+            assert hasNext();
+            okToRemove = true;
+            indexOfNextElement++;
+            return container[indexOfNextElement - 1];
+        }
+        
+        public void remove(){
+            assert okToRemove;
+            okToRemove = false;
+            indexOfNextElement--;
+            GenericList.this.remove(indexOfNextElement);
+        }
+        
+    }
+    
+    public boolean equals(Object obj){
+        assert this != null;
+        if(obj == null)
+            return false;
+        else if (this == obj)
+            return true;
+        else if( this.getClass() != obj.getClass() )
+            return false;
+        else{
+            // obj is a non null GenericList
+            GenericList list = (GenericList)obj;
+            if( list.size() != size() )
+                return false;
+            for(int i = 0; i < size(); i++)
+                if( (get(i) == null && list.get(i) != null) || !get(i).equals(list.get(i)) )
+                    return false;
+            return true;
+        }
+        
+            
+    }
+    
+
+    // creates an empty IntList
+    public GenericList(){
+        this(DEFAULT_CAP);
+    }
+
+    // pre: initialCap >= 0
+    public GenericList(int initialCap){
+        assert initialCap >= 0 : "failed precondition";
+        container = (E[])(new Object[initialCap]);
+        listSize = 0;        
+    }
+    
+    public void insertAll(int pos, GenericList<E> otherList){
+        
+        for(int i = 0; i < otherList.listSize; i++){
+            this.insert(pos + i, otherList.container[i]);
+        }
+    }
+    
+    // pre: 0 <= pos < size()
+    public E remove(int pos){
+        E result = container[pos];
+        listSize--;
+        for(int index = pos; index < size(); index++){
+            container[index] = container[index + 1];
+        }
+        container[listSize] = null;
+        return result;
+    }
+    
+    // pre: 0 <= pos <= size()
+    public void insert(int pos, E element){
+        assert 0 <= pos && pos <= size();
+        if( size() == container.length )
+            resize();
+        for(int index = size(); index > pos; index--){
+            assert index > 0;
+            container[index] = container[index - 1];
+        }
+        container[pos] = element;
+        listSize++;
+    }
+    
+    // get size of list
+    public int size(){
+        return listSize;
+    }
+    
+    // access elements
+    // pre: 0 <= position < size()
+    public E get(int position){
+        assert 0 <= position && position < size();
+        return container[position];
+    }
+    
+    // pre: none
+    public void add(E element){    
+        insert(size(), element);
+    }
+
+    private void resize() {
+        E[] temp = (E[])(new Object[container.length * 2 + 1]);
+        System.arraycopy(container, 0, temp, 0, size());
+        container = temp;
+    }
+    
+    public String toString(){
+        StringBuffer result = new StringBuffer("[");
+        final int LIMIT = size() - 1;
+        for(int i = 0; i < LIMIT; i++){
+            if( this == this.get(i) )
+                result.append("this list");
+            else{
+                result.append(get(i));
+            }
+            result.append(", ");
+        }
+        if( size() != 0)
+            result.append(get(size() - 1));
+        result.append("]");
+        return result.toString();
+    }
+   
+}
+
+/**
+ * A class that represents a node to be used in a linked list.
+ * These nodes are singly linked.
+ *
+ * @author Mike Scott
+ * @version July 27, 2005
+ */
+
+ public class ListNode
+ {
+	 // instance variables
+
+	// the data to store in this node
+	private Object myData;
+
+	// the link to the next node (presumably in a list)
+	private ListNode myNext;
+
+	/**
+	 * default constructor
+	 * pre: none<br>
+	 * post: getData() = null, getNext() = null
+	 */
+	public ListNode()
+	{	this(null, null);
+	}
+
+	/**
+	 * create a ListNode that holds the specified data and refers to the specified next element
+	 * pre: none<br>
+	 * post: getData() = item, getNext() = next
+	 * @param item the  data this ListNode should hold
+	 * @param next the next node in the list
+	 */
+	public ListNode(Object data, ListNode next)
+	{	myData = data;
+		myNext = next;
+	}
+
+	
+	/**
+	 * return the data in this node
+	 * pre: none<br>
+	 * @return the data this ListNode holds
+	 */
+	public Object getData()
+	{	return myData;	}
+
+	
+	/**
+	 * return the ListNode this ListNode refers to
+	 * pre: none<br>
+	 * @return the ListNode this ListNode refers to (normally the next one in a list)
+	 */
+	public ListNode getNext()
+	{	return myNext;	}
+
+
+	/**
+	 * set the data in this node
+	 * The old data is over written.<br>
+	 * pre: none<br>
+	 * @param data the new data for this ListNode to hold
+	 */
+	public void setData(Object data)
+	{	myData = data;	}
+
+	/**
+	 * set the next node this ListNode refers to
+	 * pre: none<br>
+	 * @param next the next node this ListNode should refer to
+	 */
+	public void setNext(ListNode next)
+	{	myNext = next;	}
+ }
+
+import java.util.Iterator;
+import Summer08.Node;
+
+public class LinkedList implements Iterable {
+    private Node head;
+    private Node tail;
+    private int size;
+    
+    public Iterator iterator(){
+        return new LLIterator();
+    }
+    
+    private class LLIterator implements Iterator{
+        private Node nextNode;
+        private boolean removeOK;
+        private int posToRemove;
+        
+        private LLIterator(){
+            nextNode = head;
+            removeOK = false;
+            posToRemove = -1;
+        }
+        
+        public boolean hasNext(){
+            return nextNode != null;
+        }
+        
+        public Object next(){
+            assert hasNext();
+            
+            Object result = nextNode.getData();
+            nextNode = nextNode.getNext();
+            
+            removeOK = true;
+            posToRemove++;
+            
+            return result;
+        }
+        
+        public void remove(){
+            assert removeOK;
+            removeOK = false;
+            LinkedList.this.remove(posToRemove);
+            posToRemove--;
+        }
+    }
+    
+    public void makeEmpty(){
+        // let GC do its job!!!!!!!
+        head = tail = null;
+        size = 0;
+    }
+    
+    public Object remove(int pos){
+        assert pos >= 0 && pos < size;
+        Object result;
+        if( pos == 0 ){
+            result = head.getData();
+            head = head.getNext();
+            if( size == 1 )
+                tail = null;
+        }
+        else{    
+            Node temp = head;
+            for(int i = 1; i < pos; i++)
+                temp = temp.getNext();
+            result = temp.getNext().getData();
+            temp.setNext( temp.getNext().getNext() );
+            if( pos == size - 1)
+                tail = temp;
+        }
+        size--;
+        return result;
+    }
+    
+    public Object get(int pos){
+        assert pos >= 0 && pos < size;
+        // array based list
+        // return myCon[pos]
+        Object result;
+        if( pos == size - 1 )
+            result = tail.getData(); //O(1)
+        else{
+            Node temp = head;
+            for(int i = 0; i < pos; i++)
+                temp = temp.getNext();
+            result = temp.getData();
+            // average case O(N) :((((
+        }
+        return result;
+    }
+    
+    public void insert(int pos, Object obj){
+        assert pos >= 0 && pos <= size;
+        
+        // addFirst?
+        if(pos == 0)
+            addFirst(obj); // O(1)
+        // add last?
+        else if( pos == size )
+            add(obj); //at end O(1)
+        else{
+            // general case
+            Node temp = head;
+            for(int i = 1; i < pos; i++)
+                temp = temp.getNext();
+            // I know temp is pointing at the
+            // node at position pos - 1
+            Node newNode = new Node(obj, temp.getNext());
+            temp.setNext( newNode );
+            size++;
+        }
+    }
+    
+    public void add(Object obj){
+        Node newNode = new Node(obj, null);
+        if( size == 0 )
+            head = newNode;
+        else
+            tail.setNext(newNode);
+        tail = newNode;
+        size++;
+    }
+    
+    public void addFirst(Object obj){
+        if(size == 0)
+            add(obj);
+        else{
+            Node newNode = new Node(obj, head);
+            head = newNode;
+            size++;
+        }
+    }
+    
+    public String toString(){
+        String result = "";
+        Node temp = head;
+        for(int i = 0; i < size; i++){
+            result += temp.getData() + " ";
+            temp = temp.getNext();
+        }
+        return result;
+    }
+}
